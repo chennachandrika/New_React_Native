@@ -12,13 +12,21 @@ import {
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
+import {useSelector,useDispatch} from "react-redux"
+import {setTodoList,setTodoText} from "../redux/actions"
+
+
 const TodoApp = ({ navigation, route }) => {
-  const [todoList, setTodoList] = useState([]);
-  const [todoText, setTodoText] = useState();
+
+  const {todoList,todoText}=useSelector(state=>state.todoReducer)
+  const dispatch=useDispatch()
+
+  // const [todoList, setTodoList] = useState([]);
+  // const [todoText, setTodoText] = useState();
   const handleList = () => {
     if (todoText !== "") {
-      setTodoList([...todoList, { todo: todoText, id: uuidv4() }]);
-      setTodoText("");
+      dispatch(setTodoList([...todoList, { todo: todoText, id: uuidv4() }]));
+      dispatch(setTodoText(""));
     }
   };
   const updateValues = () => {
@@ -26,10 +34,10 @@ const TodoApp = ({ navigation, route }) => {
       const prevTodo = todoList.filter((todo) => todo.id === route.params.id);
       if (prevTodo[0].id === route.params.id) {
         const newList = todoList.filter((todo) => todo.id !== route.params.id);
-        setTodoList([
+        dispatch(setTodoList([
           ...newList,
           { id: prevTodo[0].id, todo: route.params.todo },
-        ]);
+        ]));
       }
     }
   };
@@ -39,7 +47,7 @@ const TodoApp = ({ navigation, route }) => {
   const renderTodoAdder = () => (
     <View style={styles.addTodo}>
       <TextInput
-        onChangeText={(text) => setTodoText(text)}
+        onChangeText={(text) => dispatch(setTodoText(text))}
         value={todoText}
         style={styles.input}
         placeholder="Add New Todo"
