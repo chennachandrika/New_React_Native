@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TodoApp from "./components/TodoApp";
-import Todo from "./components/Todo";
+import TodoApp from "./src/components/TodoApp";
+import Todo from "./src/components/Todo";
 
 const Stack = createNativeStackNavigator();
 
