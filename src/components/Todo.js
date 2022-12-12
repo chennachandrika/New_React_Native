@@ -4,23 +4,26 @@ import {useSelector,useDispatch} from "react-redux"
 import {setTodoList,setTodoText} from "../redux/actions"
 
 const Todo = ({navigation, route}) => {
-  const {todo, id} = route.params;
+  // const {todo, id} = route.params;
   // const [todoText, setTodoText] = useState({todo, id});
 
-  const {todoList,todoText}=useSelector(state=>state.todoReducer)
+  const {todoList,todoText,activeTodo}=useSelector(state=>state.todoReducer)
+  const activeText = todoList.filter((todo) => todo.id === activeTodo);
+  const {todo,id}=activeText[0]
   const dispatch=useDispatch()
   
   useEffect(() => {
     dispatch(setTodoText(todo))
-  }, [route.params?.todo]);
+  }, [activeTodo]);
 
   const handleTodo = () => {
-    const newList = todoList.filter((todo) => todo.id !== route.params.id);
+    const newList = todoList.filter((todo) => todo.id !== activeTodo);
     dispatch(setTodoList([
       ...newList,
       { id: id, todo: todoText },
     ]));
     navigation.navigate('Home');
+    //removed params through navigation
   };
   return (
     <View style={{margin: 12}}>

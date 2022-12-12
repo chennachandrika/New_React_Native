@@ -13,7 +13,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
 import {useSelector,useDispatch} from "react-redux"
-import {setTodoList,setTodo} from "../redux/actions"
+import {setTodoList,setTodo,setActiveTodo} from "../redux/actions"
 
 
 const TodoApp = ({ navigation, route }) => {
@@ -70,9 +70,12 @@ const TodoApp = ({ navigation, route }) => {
                 key={i}
                 numberOfLines={1}
                 style={styles.todoContainer}
-                onPress={() =>
-                  navigation.navigate("Todo", { todo: todo.todo, id: todo.id })
+                onPress={() =>{
+                  dispatch(setActiveTodo(todo.id))
+                  navigation.navigate("Todo")
+                  //removed params through navigation navigation.navigate("Todo", { todo: todo.todo, id: todo.id })
                 }
+              }
               >
                 {todo.todo}
               </Text>
