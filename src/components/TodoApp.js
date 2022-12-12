@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,28 +8,26 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-} from "react-native";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+} from 'react-native';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
 
-import {useSelector,useDispatch} from "react-redux"
-import {setTodoList,setTodo,setActiveTodo} from "../redux/actions"
+import {useSelector, useDispatch} from 'react-redux';
+import {setTodoList, setTodo, setActiveTodo} from '../redux/actions';
 
-
-const TodoApp = ({ navigation, route }) => {
-
-  const {todoList,todoAdd}=useSelector(state=>state.todoReducer)
-  const dispatch=useDispatch()
+const TodoApp = ({navigation, route}) => {
+  const {todoList, todoAdd} = useSelector(state => state.todoReducer);
+  const dispatch = useDispatch();
 
   // const [todoList, setTodoList] = useState([]);
   // const [todoText, setTodoText] = useState();
   const handleList = () => {
-    if (todoAdd !== "") {
-      dispatch(setTodoList([...todoList, { todo: todoAdd, id: uuidv4() }]));
-      dispatch(setTodo(""));
+    if (todoAdd !== '') {
+      dispatch(setTodoList([...todoList, {todo: todoAdd, id: uuidv4()}]));
+      dispatch(setTodo(''));
     }
   };
-  
+
   // const updateValues = () => {
   //   if (route.params?.todo) {
   //     const prevTodo = todoList.filter((todo) => todo.id === route.params.id);
@@ -50,7 +48,7 @@ const TodoApp = ({ navigation, route }) => {
   const renderTodoAdder = () => (
     <View style={styles.addTodo}>
       <TextInput
-        onChangeText={(text) => dispatch(setTodo(text))}
+        onChangeText={text => dispatch(setTodo(text))}
         value={todoAdd}
         style={styles.input}
         placeholder="Add New Todo"
@@ -70,13 +68,11 @@ const TodoApp = ({ navigation, route }) => {
                 key={i}
                 numberOfLines={1}
                 style={styles.todoContainer}
-                onPress={() =>{
-                  dispatch(setActiveTodo(todo.id))
-                  navigation.navigate("Todo")
+                onPress={() => {
+                  dispatch(setActiveTodo(todo.id));
+                  navigation.navigate('Todo');
                   //removed params through navigation navigation.navigate("Todo", { todo: todo.todo, id: todo.id })
-                }
-              }
-              >
+                }}>
                 {todo.todo}
               </Text>
             ))}
@@ -88,42 +84,42 @@ const TodoApp = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   todoContainer: {
-    backgroundColor: "#EBEBEB",
+    backgroundColor: '#EBEBEB',
     padding: 10,
     borderRadius: 10,
     margin: 4,
   },
   addTodo: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 10,
     margin: 10,
-    backgroundColor: "#fff",
-    borderColor: "#EBEBEB",
+    backgroundColor: '#fff',
+    borderColor: '#EBEBEB',
     borderWidth: 1,
     borderRadius: 20,
   },
   input: {
-    color: "black",
+    color: 'black',
     flex: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    alignItems: "center",
+    backgroundColor: '#fff',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    alignItems: 'center',
   },
   todoAppWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
-    width: "100%",
+    width: '100%',
   },
   titleFont: {
     fontSize: 26,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   todosWrapper: {
-    width: "100%",
+    width: '100%',
     marginTop: 20,
   },
 });
