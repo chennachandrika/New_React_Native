@@ -1,6 +1,7 @@
 export const SET_TODO_LIST="SET_TODO_LIST"
 export const SET_TODO_TEXT="SET_TODO_TEXT"
 export const SET_TODO="SET_TODO"
+export const SET_ACTIVE_TODO="SET_ACTIVE_TODO"
 
 export const setTodoList=list=>dispatch=>{
     dispatch({
@@ -20,5 +21,12 @@ export const setTodoText=text=>dispatch=>{
     dispatch({
         type:SET_TODO_TEXT,
         payload:text
+    })
+}
+
+export const setActiveTodo=id=>dispatch=>{
+    dispatch({
+        type:SET_ACTIVE_TODO,
+        payload:id
     })
 }

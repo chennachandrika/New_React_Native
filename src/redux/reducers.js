@@ -1,9 +1,10 @@
-import {SET_TODO_LIST,SET_TODO_TEXT,SET_TODO} from "./actions"
+import {SET_TODO_LIST,SET_TODO_TEXT,SET_TODO,SET_ACTIVE_TODO} from "./actions"
 
 const initialState={
     todoList:[],
     todoAdd:"",
-    todoText:""
+    todoText:"",
+    activeTodo:""
 }
 
 function todoReducer(state=initialState,action){
@@ -14,6 +15,8 @@ function todoReducer(state=initialState,action){
             return {...state,todoAdd:action.payload}
         case SET_TODO_TEXT:    
             return {...state,todoText:action.payload}
+        case SET_ACTIVE_TODO:
+            return {...state,activeTodo:action.payload}
         default:
             return state;
     }
