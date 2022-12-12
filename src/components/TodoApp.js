@@ -29,21 +29,24 @@ const TodoApp = ({ navigation, route }) => {
       dispatch(setTodo(""));
     }
   };
-  const updateValues = () => {
-    if (route.params?.todo) {
-      const prevTodo = todoList.filter((todo) => todo.id === route.params.id);
-      if (prevTodo[0].id === route.params.id) {
-        const newList = todoList.filter((todo) => todo.id !== route.params.id);
-        dispatch(setTodoList([
-          ...newList,
-          { id: prevTodo[0].id, todo: route.params.todo },
-        ]));
-      }
-    }
-  };
-  useEffect(() => {
-    updateValues();
-  }, [route.params?.todo]);
+  
+  // const updateValues = () => {
+  //   if (route.params?.todo) {
+  //     const prevTodo = todoList.filter((todo) => todo.id === route.params.id);
+  //     if (prevTodo[0].id === route.params.id) {
+  //       const newList = todoList.filter((todo) => todo.id !== route.params.id);
+  //       dispatch(setTodoList([
+  //         ...newList,
+  //         { id: prevTodo[0].id, todo: route.params.todo },
+  //       ]));
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   updateValues();
+  // }, [route.params?.todo]);
+
   const renderTodoAdder = () => (
     <View style={styles.addTodo}>
       <TextInput
