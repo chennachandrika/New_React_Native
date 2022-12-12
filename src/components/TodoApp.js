@@ -13,20 +13,20 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
 import {useSelector,useDispatch} from "react-redux"
-import {setTodoList,setTodoText} from "../redux/actions"
+import {setTodoList,setTodo} from "../redux/actions"
 
 
 const TodoApp = ({ navigation, route }) => {
 
-  const {todoList,todoText}=useSelector(state=>state.todoReducer)
+  const {todoList,todoAdd}=useSelector(state=>state.todoReducer)
   const dispatch=useDispatch()
 
   // const [todoList, setTodoList] = useState([]);
   // const [todoText, setTodoText] = useState();
   const handleList = () => {
-    if (todoText !== "") {
-      dispatch(setTodoList([...todoList, { todo: todoText, id: uuidv4() }]));
-      dispatch(setTodoText(""));
+    if (todoAdd !== "") {
+      dispatch(setTodoList([...todoList, { todo: todoAdd, id: uuidv4() }]));
+      dispatch(setTodo(""));
     }
   };
   const updateValues = () => {
@@ -47,8 +47,8 @@ const TodoApp = ({ navigation, route }) => {
   const renderTodoAdder = () => (
     <View style={styles.addTodo}>
       <TextInput
-        onChangeText={(text) => dispatch(setTodoText(text))}
-        value={todoText}
+        onChangeText={(text) => dispatch(setTodo(text))}
+        value={todoAdd}
         style={styles.input}
         placeholder="Add New Todo"
       />
