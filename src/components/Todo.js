@@ -1,34 +1,34 @@
 import {useState, useEffect} from 'react';
 import {View, TextInput, StyleSheet, Button} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {setTodoList, setTodoText} from '../redux/actions';
+import {setActiveTodo, setTodoList} from '../redux/actions';
 
 const Todo = ({navigation, route}) => {
   // const {todo, id} = route.params;
   // const [todoText, setTodoText] = useState({todo, id});
 
-  const {todoList, todoText, activeTodo} = useSelector(
+  const {todoList, activeTodo} = useSelector(
     state => state.todoReducer,
-  );
-  const activeText = todoList.filter(todo => todo.id === activeTodo);
-  const {todo, id} = activeText[0];
+  );  
+  // const activeText = todoList.filter(todo => todo.id === activeTodo[0].id);
+  const {todo, id} = activeTodo[0];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setTodoText(todo));
-  }, [activeTodo]);
+    dispatch(setActiveTodo([{todo,id}]));
+  }, [activeTodo.id]);
 
   const handleTodo = () => {
-    const newList = todoList.filter(todo => todo.id !== activeTodo);
-    dispatch(setTodoList([...newList, {id: id, todo: todoText}]));
+    const newList = todoList.filter(todo => todo.id !== activeTodo[0].id);
+    dispatch(setTodoList([...newList, {id: id, todo: activeTodo[0].todo}]));
     navigation.navigate('Home');
     //removed params through navigation
   };
   return (
     <View style={{margin: 12}}>
       <TextInput
-        onChangeText={text => dispatch(setTodoText(text))}
-        value={todoText}
+        onChangeText={text => dispatch(setActiveTodo([{todo:text,id}]))}
+        value={activeTodo[0].todo}
         style={styles.todoContainer}
         placeholder="Edit Todo"
       />

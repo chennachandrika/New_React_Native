@@ -69,7 +69,7 @@ const TodoApp = ({navigation, route}) => {
                 numberOfLines={1}
                 style={styles.todoContainer}
                 onPress={() => {
-                  dispatch(setActiveTodo(todo.id));
+                  dispatch(setActiveTodo([{id:todo.id,todo:todo.todo}]));
                   navigation.navigate('Todo');
                   //removed params through navigation navigation.navigate("Todo", { todo: todo.todo, id: todo.id })
                 }}>
