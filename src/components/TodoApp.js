@@ -15,16 +15,29 @@ import {v4 as uuidv4} from 'uuid';
 import {useSelector, useDispatch} from 'react-redux';
 import {setTodoList, setTodo, setActiveTodo} from '../redux/actions';
 
+import firestore from '@react-native-firebase/firestore';
+
 const TodoApp = ({navigation, route}) => {
   const {todoList, todoAdd} = useSelector(state => state.todoReducer);
   const dispatch = useDispatch();
 
+  const ref = firestore().collection('todos');
+
   // const [todoList, setTodoList] = useState([]);
   // const [todoText, setTodoText] = useState();
-  const handleList = () => {
+  const handleList = async() => {
     if (todoAdd !== '') {
-      dispatch(setTodoList([...todoList, {todo: todoAdd, id: uuidv4()}]));
+      const newId=uuidv4()
+      dispatch(setTodoList([...todoList, {todo: todoAdd, id:newId }]));
       dispatch(setTodo(''));
+      await ref.add({
+        id:newId,
+        todo: todoAdd,
+      });
+    }
+    else{
+      alert('Please Enter Todo')
+      return
     }
   };
 
@@ -53,7 +66,7 @@ const TodoApp = ({navigation, route}) => {
         style={styles.input}
         placeholder="Add New Todo"
       />
-      <Button title="+" onPress={() => handleList()} />
+      <Button disabled={todoAdd.length===0} title="+" onPress={() => handleList()} />
     </View>
   );
   return (
