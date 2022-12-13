@@ -23,6 +23,21 @@ const TodoApp = ({navigation, route}) => {
 
   const ref = firestore().collection('todos');
 
+  useEffect(()=>{
+    return ref.onSnapshot((querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach(doc => {
+        const { todo, id } = doc.data();
+        list.push({
+          id,
+          todo,
+        });
+      });
+
+      dispatch(setTodoList(list));
+    });
+  },[])
+
   // const [todoList, setTodoList] = useState([]);
   // const [todoText, setTodoText] = useState();
   const handleList = async() => {
