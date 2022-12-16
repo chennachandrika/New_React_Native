@@ -12,6 +12,7 @@ const Todo = ({navigation, route}) => {
   );  
   // const activeText = todoList.filter(todo => todo.id === activeTodo[0].id);
   const {todo, id} = activeTodo[0];
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +22,11 @@ const Todo = ({navigation, route}) => {
   const handleTodo = () => {
     const newList = todoList.filter(todo => todo.id !== activeTodo[0].id);
     dispatch(setTodoList([...newList, {id: id, todo: activeTodo[0].todo}]));
+    const {todo, id} = activeTodo[0];
+    id.set({
+      id:id,
+      todo:todo
+    })
     navigation.navigate('Home');
     //removed params through navigation
   };

@@ -23,11 +23,11 @@ const TodoApp = ({navigation, route}) => {
 
   const ref = firestore().collection('todos');
 
-  useEffect(()=>{
-    return ref.onSnapshot((querySnapshot) => {
+  useEffect(() => {
+    return ref.onSnapshot(querySnapshot => {
       const list = [];
       querySnapshot.forEach(doc => {
-        const { todo, id } = doc.data();
+        const {todo, id} = doc.data();
         list.push({
           id,
           todo,
@@ -36,23 +36,26 @@ const TodoApp = ({navigation, route}) => {
 
       dispatch(setTodoList(list));
     });
-  },[])
+  }, []);
 
   // const [todoList, setTodoList] = useState([]);
   // const [todoText, setTodoText] = useState();
-  const handleList = async() => {
+  const handleList = async () => {
     if (todoAdd !== '') {
-      const newId=uuidv4()
-      dispatch(setTodoList([...todoList, {todo: todoAdd, id:newId }]));
+      // const newId = uuidv4();
       dispatch(setTodo(''));
-      await ref.add({
-        id:newId,
+      const key = await ref.add({
         todo: todoAdd,
       });
-    }
-    else{
-      alert('Please Enter Todo')
-      return
+      key.set({
+        id:key,
+        todo:todoAdd
+      });
+      dispatch(setTodoList([...todoList, {todo: todoAdd, id: key}]));
+      // console.log(key._documentPath._parts[1]);
+    } else {
+      alert('Please Enter Todo');
+      return;
     }
   };
 
@@ -81,7 +84,11 @@ const TodoApp = ({navigation, route}) => {
         style={styles.input}
         placeholder="Add New Todo"
       />
-      <Button disabled={todoAdd.length===0} title="+" onPress={() => handleList()} />
+      <Button
+        disabled={todoAdd.length === 0}
+        title="+"
+        onPress={() => handleList()}
+      />
     </View>
   );
   return (
@@ -97,7 +104,7 @@ const TodoApp = ({navigation, route}) => {
                 numberOfLines={1}
                 style={styles.todoContainer}
                 onPress={() => {
-                  dispatch(setActiveTodo([{id:todo.id,todo:todo.todo}]));
+                  dispatch(setActiveTodo([{id: todo.id, todo: todo.todo}]));
                   navigation.navigate('Todo');
                   //removed params through navigation navigation.navigate("Todo", { todo: todo.todo, id: todo.id })
                 }}>
